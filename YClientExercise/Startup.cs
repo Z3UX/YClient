@@ -26,7 +26,7 @@ namespace YClientExercise
                 dbContextOptions => dbContextOptions
                     .UseMySql(
                         // Replace with your connection string.
-                        "server=localhost;user=root;password=;database=yclient",
+                        "server=localhost;user=root;password=;database=yclientjosue",
                         // Replace with your server version and type.
                         mySqlOptions => mySqlOptions
                             .ServerVersion(new Version(8, 0, 21), ServerType.MySql)
