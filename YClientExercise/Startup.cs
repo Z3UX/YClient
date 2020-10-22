@@ -43,6 +43,10 @@ namespace YClientExercise
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles(); // Para utilizar o index.html como default path 
+
+            app.UseStaticFiles(); // Para utilizar a pasta wwwroot
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

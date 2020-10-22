@@ -1,6 +1,101 @@
-$(document).ready(function () {
-    usersTable();
-});
+function saveNumber() {
+
+    let numObj = { value: parseFloat($('#number').val()) };
+
+    $.ajax({
+        method: "POST",
+        url: window.location.origin + "/v1/numbers",
+        data: JSON.stringify(numObj),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            alert("O número " + response.value + " foi guardado com o ID # " + response.id);
+        },
+        error: function (xhr) {
+            alert("Error " + xhr.responseJSON.status + ": " + xhr.responseJSON.title);
+        }
+    });
+}
+
+// Copyright 2008 Bontrager Connection, LLC
+// https://www.willmaster.com/
+
+// When no form field name is provided, it is assumed
+//   to be the default name with the default name
+//   increment number appended.
+
+var DefaultName = "sum";
+var DefaultNameIncrementNumber = 1;
+
+// No further customizations required.
+
+function AddFormField(id, type, name, value, tag) {
+    if (!document.getElementById && document.createElement) { return; }
+    var inhere = document.getElementById(id);
+    var formfield = document.createElement("input");
+    if (name.length < 1) {
+        DefaultNameIncrementNumber++;
+        name = String(DefaultName + DefaultNameIncrementNumber);
+    }
+    formfield.type = type;
+    formfield.value = value;
+    formfield.id = name;
+    formfield.className = "form-control";
+    if (tag.length > 0) {
+        var thetag = document.createElement(tag);
+        thetag.appendChild(formfield);
+        inhere.appendChild(thetag);
+    }
+    else { inhere.appendChild(formfield); }
+} // function AddFormField()
+
+
+function sumNumbers() {
+
+    let numArr = [];
+
+    for (let i = 0; i <= DefaultNameIncrementNumber; i++) {
+        if ($('#sum' + i).val() != "") {
+            numArr.push(parseInt($('#sum' + i).val(), 10));
+        }
+    }
+
+    $.ajax({
+        method: "POST",
+        url: window.location.origin + "/v1/sum",
+        data: JSON.stringify(numArr),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            document.getElementById("result").innerHTML = "O total da soma é " + response;
+        },
+        error: function (xhr) {
+            alert("Error " + xhr.responseJSON.status + ": " + xhr.responseJSON.title);
+        }
+    });
+}
+
+
+function saveCar(id) {
+
+    let car = { brand: $('#brand').val(), model: $('#model').val(), licensePlate: $('#licensePlate').val() };
+
+    $.ajax({
+        method: "POST",
+        url: window.location.origin + "/api/user/" + id + "/car/",
+        data: JSON.stringify(car),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            alert("Car saved with ID #" + response.id);
+            usersTable();
+        },
+        error: function (xhr) {
+            alert("Error " + xhr.responseJSON.status + ": " + xhr.responseJSON.title);
+        }
+    });
+}
+
 
 function usersTable() {
 
@@ -9,13 +104,14 @@ function usersTable() {
     let navigation = $('#navigation');
 
     navigation.html("");
-    tableName.html("List of Users");
-    table.html("<tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Cars</th></tr>");
+    tableName.html("List of Numbers");
+    table.html("<tr><th>ID</th><th>Number</th></tr>");
 
     $.ajax({
-        url: window.location.origin + '/api/user',
+        url: window.location.origin + '/v1/num',
         success: successCallback,
     });
+
 
     function successCallback(response) {
         response.map(function (object) {
@@ -25,6 +121,7 @@ function usersTable() {
                 "<button onclick=\"addCar(" + object.id + ")\" type=\"button\" class=\"btn btn-primary\">Add</button></td>")
         });
     }
+
 }
 
 function userCars(id) {
@@ -90,7 +187,7 @@ function addCar(id) {
 
 function saveCar(id) {
 
-    let car = {brand: $('#brand').val(), model: $('#model').val(), licensePlate: $('#licensePlate').val()};
+    let car = { brand: $('#brand').val(), model: $('#model').val(), licensePlate: $('#licensePlate').val() };
 
     $.ajax({
         method: "POST",

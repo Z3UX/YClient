@@ -30,12 +30,24 @@
         </div>
     </div>
 
-    <div id="navigation" style="text-align:center">
+    <div id="navigation">
 
-        <a href="/add-number.html"><button type="button" class="btn btn-primary btn-lg">Adicionar Números</button></a>
-        <a href="/sum-numbers.html"><button type="button" class="btn btn-primary btn-lg">Somar Números</button></a>
-
-</div>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="number">Insira um número na base de dados</label>
+                    <input type="number" step="0.01" class="form-control" id="number">
+                    <small class="form-text text-muted">O número pode ser inteiro ou décimal.</small>
+                    <br /><br />
+                    <button type="button" onclick="saveNumber()" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    <div style="text-align:center">
+        <a href="/index.html"><button type="button" class="btn btn-primary btn-lg">Voltar</button></a>
+    </div>
 </body>
 
 </html>
